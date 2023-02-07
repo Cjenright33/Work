@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" type="text/css" href="Main.css"/>
+  </head>
+  <body>
+    <div class="home">
+    <button onclick='window.location.href = "Index.html"'>Home</button>
+    </div>
+
+    <div class="title">
+      <h1>Encryption Type Checker</h1>
+    </div>
+
+    <script defer src="https://pyscript.net/alpha/pyscript.js"></script>
+
+    <p><b>How To Restart</b></p>
+    <P>To Restart Click <b>Restart</b> The page will reboot and a box will appear saying "This page says". This is where you should input the encrypted value to Decrypt it to plain text. </P>
+    <p>From here press <b>OK</b> if CANCEL is clicked an error may occur</p>
+        <button onclick='window.location.href = "Hash_Decrypter_Script.html"'>Restart</button>
+
+
+    <p><b>Output:</b></p>
+
+    
+    <py-script> 
+      import hashlib     
+      Hash_String = 0
+            
+      def is_hash(input_data):
+                hash_types = [
+                    ('md5', hashlib.md5()),
+                    ('sha1', hashlib.sha1()),
+                    ('sha224', hashlib.sha224()),
+                    ('sha256', hashlib.sha256()),
+                    ('sha384', hashlib.sha384()),
+                    ('sha512', hashlib.sha512())
+                ]
+                for name, hasher in hash_types:
+                    length = len(hasher.hexdigest())
+                    if len(input_data) == length:
+                        try:
+                            int(input_data, 16)
+                            return name
+                        except ValueError:
+                            pass
+                return None
+            
+      input_data = input("Please enter the encrypted value you would like to check.")
+      output = is_hash(input_data)
+      if output:
+          print(f"The string is a {output} hash value.")
+      else:
+          print("The string is not a hash value. This means the value is not encrypted. Due to this the current script has been terminated. See instructions above to restart.")
+          Hash_String = 1
+        </py-script>
+
+
+        <script>
+          function redirectOnError() {
+            if (document.body.innerText.includes("JsException(PythonError")) {
+              window.location.href = "Hash_Decrypter_Error.html";
+            } else {
+              setTimeout(redirectOnError, 500);
+            }
+          }
+          window.onload = redirectOnError;
+        </script>
+    
+        
+    </body>
+    </html>
+    

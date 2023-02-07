@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" type="text/css" href="Main.css"/>
+  </head>
+  <body>
+    <div class="home">
+    <button onclick='window.location.href = "Index.html"'>Home</button>
+    </div>
+    <div class="title">
+      <h1>Port Scanner</h1>
+    </div>
+ 
+        <title>Website Port Scanner</title>
+      </head>
+      <body>
+        <h2>Website Port Scanner</h2>
+    
+        <form action="" method="post">
+          <p>Enter the URL to scan: <input type="text" name="url" /></p>
+          <p>Enter the starting port: <input type="text" name="start_port" /></p>
+          <p>Enter the ending port: <input type="text" name="end_port" /></p>
+          <p><input type="submit" value="Submit" /></p>
+        </form>
+    
+        <textarea id="output" rows="10" cols="30"></textarea>
+    
+        <script>
+          function port_scanner(host, port) {
+            try {
+              var s = new WebSocket("ws://" + host + ":" + port);
+              s.onopen = function() {
+                document.getElementById("output").value += "Port " + port + " is open\n";
+                s.close();
+              };
+              s.onerror = function(error) {
+                document.getElementById("output").value += "Could not connect to the host\n";
+              };
+            } catch (e) {
+              document.getElementById("output").value += "Could not connect to the host\n";
+            }
+          }
+    
+          var form = document.querySelector("form");
+          form.onsubmit = function(event) {
+            event.preventDefault();
+            var url = form.elements.url.value;
+            var start_port = form.elements.start_port.value;
+            var end_port = form.elements.end_port.value;
+            for (var port = start_port; port <= end_port; port++) {
+              port_scanner(url, port);
+            }
+          };
+        </script>
+   
+    
+</body>
+</html>
